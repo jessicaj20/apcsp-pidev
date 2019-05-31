@@ -1,37 +1,41 @@
 #include <stdio.h>
 
-float areaofcircle (float r, float a)
+float areaOfCircle(float radius) 
 {
-  a = r * r * 3.14;
-  return a;
+  float area = (3.14159265358979323846 * radius * radius);
+  return area;
 }
 
-int main(void)
+int main(int argc, char* argv[])
+{
+ if (argc != 3)
   {
-    char input [256];
-    float lower;
-    float upper;
-    printf("What is the lower value of your range for the radius?\n");
-   while(1)
-   {
-     fgets(input, 256, stdin);
-     if (sscanf(input, "%f", &lower) == 1) break;
-     printf("Not a valid value, please enter again\n");
-   }
-   printf("What is the upper value of the range for the radius?\n");
-   while (1)
-   {
-     fgets(input, 256, stdin);
-     if (sscanf(input, "%f", &upper) ==1) break;
-     printf("Not a valud value, please enter again\n");
-   }
+    printf("%s : expected 2 args, please enter two floats\n", argv[0]);
+    return 1;
+  }
+  
+  float lower;
+  int found = sscanf(argv[1], "%f", &lower);
+  if (found != 1)
+    {
+	printf("First arg is not a decimal, enter two floats\n");
+	return 1;
+    }
 
-   //call area of circle
-   float r;
-   float a;
-   for (r = lower; r <= upper; r++)
-   {
-     a = areaofcircle(r, a);
-     printf("Area is %f\n", a);
-   }
-   }
+  float upper;
+  found = sscanf(argv[2], "%f", &upper);
+  if (found != 1)
+    {
+	printf("Second arg is not a decimal, enter two floats\n");
+	return 1;
+    }
+  //printf("Enter a lower bound:\n");
+  //scanf("%f", &lower);
+  //printf("Enter an upper bound:\n");
+  //scanf("%f", &upper);
+  for (float radius = lower; radius <= upper; radius++)
+    {
+	float result = areaOfCircle(radius);
+	printf("Area at r = %f: %f\n", radius, result);
+    }
+}
